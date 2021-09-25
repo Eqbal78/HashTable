@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HashTable
 {
-    public class MyMapNode<K,V>
+    public class MyMapNode<K, V>
     {
         //Initializing
         private int size;
@@ -37,7 +37,7 @@ namespace HashTable
         public int GetArrayPosition(K key)
         {
             int position = key.GetHashCode() % this.size;
-            
+
             return Math.Abs(position);
         }
 
@@ -96,26 +96,45 @@ namespace HashTable
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public int GetFrequencyOfWords(V value)
-        {
-            int count = 0;
-            if (items == null)
-            {
-                Console.WriteLine("Hash Table is Empty!");
-                return 0;
-            }
-            for (int i = 0; i < items.Length; i++)
-            {
-                LinkedList<KeyValue<K, V>> linkedList = GetLinkedList(i);
-                foreach (KeyValue<K, V> item in linkedList)
-                {
-                    if (item.value.Equals(value))
-                        count++;
-                }
-            }
-            return count;
-        }
+        /*  public int GetFrequencyOfWords(V value)
+          {
+              int count = 0;
+              if (items == null)
+              {
+                  Console.WriteLine("Hash Table is Empty!");
+                  return 0;
+              }
+              for (int i = 0; i < items.Length; i++)
+              {
+                  LinkedList<KeyValue<K, V>> linkedList = GetLinkedList(i);
+                  foreach (KeyValue<K, V> item in linkedList)
+                  {
+                      if (item.value.Equals(value))
+                          count++;
+                  }
+              }
+              return count;
+          }*/
 
-       
+        //Create a dictionary
+        Dictionary<string, int> frequency = new Dictionary<string, int>();
+
+        /// <summary>
+        /// Calculating the frequency of words
+        /// </summary>
+        /// <param name="hash"></param>
+        public void Frequency(MyMapNode<int, string> hash)
+        {
+            for (int key = 0; key < hash.size; key++)
+            {
+                frequency.TryAdd(hash.Get(key).ToLower(), 0);
+                frequency[hash.Get(key).ToLower()]++;
+            }
+            foreach (KeyValuePair<string, int> item in frequency)
+            {
+                Console.WriteLine("Frequency of word " + item.Key + " is : " + item.Value);
+
+            }
+        }
     }
 }
